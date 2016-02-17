@@ -81,6 +81,18 @@ namespace ChkNamespaceAsync
                 _Is_namespace = value;
             }
         }
+        private static int _lno;        // 行Ｎｏ．
+        public int Lno
+        {
+            get
+            {
+                return (_lno);
+            }
+            set
+            {
+                _lno = value;
+            }
+        }
         #endregion
 
         #region コンストラクタ
