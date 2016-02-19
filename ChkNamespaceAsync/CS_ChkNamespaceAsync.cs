@@ -125,7 +125,8 @@ namespace ChkNamespaceAsync
                 {   // [namespace]フラグは、true？
                     if (!rsvwrd.Is_namespace)
                     {   // 評価情報は、非予約語？
-                        // ＬＢＬ情報テーブルに、namespace名を登録する
+                        // ＬＢＬ情報に、namespace名を登録する
+                        _result = "N " + _wbuf + _lno.ToString();
                         _Is_namespace = false;       // [namespace]フラグ：false
                     }
                 }
@@ -133,6 +134,7 @@ namespace ChkNamespaceAsync
                 {   // [namespace]フラグは、false
                     if (rsvwrd.Is_namespace)
                     {   // 評価情報は、"namespace"？
+                        _result = "";
                         _Is_namespace = true;       // [namespace]フラグ：true
                         rsvwrd.Is_namespace = false;
                     }
