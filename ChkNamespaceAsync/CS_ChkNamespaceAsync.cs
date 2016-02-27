@@ -126,7 +126,8 @@ namespace ChkNamespaceAsync
                     if (!rsvwrd.Is_namespace)
                     {   // 評価情報は、非予約語？
                         // ＬＢＬ情報に、namespace名を登録する
-                        _result = "N " + _wbuf + _lno.ToString();
+                        // _result = "N " + _wbuf + _lno.ToString();
+                        _result = string.Format("N {0} {1,5:D}", _wbuf, _lno);
                         _Is_namespace = false;       // [namespace]フラグ：false
                     }
                 }
@@ -154,7 +155,8 @@ namespace ChkNamespaceAsync
                     if (!rsvwrd.Is_namespace)
                     {   // 評価情報は、非予約語？
                         // ＬＢＬ情報に、namespace名を登録する
-                        _result = "N " + _wbuf + _lno.ToString();
+                        // _result = "N " + _wbuf + _lno.ToString();
+                        _result = string.Format("N {0} {1,5:D}", _wbuf, _lno);
                         _Is_namespace = false;       // [namespace]フラグ：false
                     }
                 }
