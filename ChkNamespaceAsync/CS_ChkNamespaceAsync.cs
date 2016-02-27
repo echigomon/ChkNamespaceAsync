@@ -141,6 +141,71 @@ namespace ChkNamespaceAsync
                 }
             }
         }
+        public async Task<String> ExecAsync(int lineno, String msg)
+        {   // "namespace"評価
+            await SetbufAsync(lineno, msg);
+
+            if (!_empty)
+            {   // バッファーに実装有り
+                await rsvwrd.ExecAsync(_wbuf);     // 評価情報の予約語確認を行う
+
+                if (_Is_namespace)
+                {   // [namespace]フラグは、true？
+                    if (!rsvwrd.Is_namespace)
+                    {   // 評価情報は、非予約語？
+                        // ＬＢＬ情報に、namespace名を登録する
+                        _result = "N " + _wbuf + _lno.ToString();
+                        _Is_namespace = false;       // [namespace]フラグ：false
+                    }
+                }
+                else
+                {   // [namespace]フラグは、false
+                    if (rsvwrd.Is_namespace)
+                    {   // 評価情報は、"namespace"？
+                        _result = "";
+                        _Is_namespace = true;       // [namespace]フラグ：true
+                        rsvwrd.Is_namespace = false;
+                    }
+                }
+            }
+
+            return (_result);
+        }
+        #endregion
+
+        #region サブ・モジュール
+        private async Task SetbufAsync(int lineno, String _strbuf)
+        {   // [_wbuf]情報設定
+            _lno = lineno;
+            _wbuf = _strbuf;
+
+            if (_wbuf == null)
+            {   // 設定情報は無し？
+                _empty = true;
+            }
+            else
+            {   // 整形処理を行う
+                // 不要情報削除
+                if (lrskip == null)
+                {   // 未定義？
+                    lrskip = new CS_LRskipAsync();
+                }
+                await lrskip.ExecAsync(_wbuf);
+                _wbuf = lrskip.Wbuf;
+
+                // 作業の為の下処理
+                if (_wbuf.Length == 0 || _wbuf == null)
+                {   // バッファー情報無し
+                    // _wbuf = null;
+                    _empty = true;
+                }
+                else
+                {
+                    _empty = false;
+                }
+
+            }
+        }
         #endregion
     }
 }
